@@ -22,23 +22,23 @@ The project is organized into modular components to ensure clarity, maintainabil
 ├── README.md
 ├── requirements.txt
 │
-├── 1_data_ingestion_and_retraining/
+├── data_ingestion_and_retraining/
 │   ├── training_pipeline.py
 │   ├── retrain_manager.py
 │   └── simulate_new_data.py
 │
-├── 2_prediction_service/
+├── prediction_service/
 │   ├── main.py
 │   ├── database_worker.py
 │   └── fraud_detection_model.joblib
 │
-└── 3_utilities/
+└── utilities/
     └── test_db_connection.py
 ```
 
--   **`1_data_ingestion_and_retraining/`**: Contains all scripts related to the initial data handling, model training, and the continuous learning cycle.
--   **`2_prediction_service/`**: Holds the real-time components, including the API server and the background database worker. The pre-trained model is also stored here.
--   **`3_utilities/`**: Includes helper scripts for diagnostics and testing, such as verifying the database connection.
+-   **`data_ingestion_and_retraining/`**: Contains all scripts related to the initial data handling, model training, and the continuous learning cycle.
+-   **`prediction_service/`**: Holds the real-time components, including the API server and the background database worker. The pre-trained model is also stored here.
+-   **`utilities/`**: Includes helper scripts for diagnostics and testing, such as verifying the database connection.
 -   **`requirements.txt`**: A list of all Python dependencies required to run the project.
 -   **`fraud_detection_model.joblib`**: The serialized, pre-trained machine learning model, ready for use by the prediction service.
 
@@ -80,7 +80,7 @@ The prediction service is composed of two components that must run simultaneousl
         .\venv\Scripts\activate
 
         # Run the Uvicorn server
-        python -m uvicorn 2_prediction_service.main:app --reload
+        python -m uvicorn prediction_service.main:app --reload
         ```
 
 2.  **The Database Worker:**
@@ -93,7 +93,7 @@ The prediction service is composed of two components that must run simultaneousl
         .\venv\Scripts\activate
 
         # Run the worker
-        python 2_prediction_service/database_worker.py
+        python prediction_service/database_worker.py
         ```
 
 ### D. The Automated Retraining Mechanism
@@ -105,7 +105,7 @@ This system is designed to learn from new data over time.
     -   **Description**: A utility script that generates 1,001 fake transactions and adds them to the queue, mimicking the arrival of new data in a production environment.
     -   **How to Run:**
         ```bash
-        python 1_data_ingestion_and_retraining/simulate_new_data.py
+        python data_ingestion_and_retraining/simulate_new_data.py
         ```
 
 2.  **The Retraining Manager:**
@@ -113,7 +113,7 @@ This system is designed to learn from new data over time.
     -   **Description**: This is the core of the continuous learning system. When executed, it checks the total number of records in the database against a log of the last training count. If the number of new records exceeds a predefined threshold (e.g., 1000), it automatically triggers the `training_pipeline.py` script. This retrains the model on the entire, updated dataset and overwrites the old `fraud_detection_model.joblib` file with the new, improved version.
     -   **How to Run:**
         ```bash
-        python 1_data_ingestion_and_retraining/retrain_manager.py
+        python data_ingestion_and_retraining/retrain_manager.py
         ```
 
 ---
