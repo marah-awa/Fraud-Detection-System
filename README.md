@@ -121,3 +121,22 @@ This system is designed to learn from new data over time.
 ## 4. Results & Performance
 
 The trained model demonstrates excellent performance, achieving an **accuracy and F1-score of over 94%** on the test set. The system architecture is robust, modular, and scalable, providing a solid foundation for a real-world fraud detection application. The automated retraining loop ensures that the model's accuracy will not degrade over time and can adapt to new, emerging fraud patterns.
+
+---
+
+## 5. Dockerization (Optional)
+
+This repository also includes a `Dockerfile` to allow for easy containerization of the prediction service. This is useful for deploying the application in a consistent and isolated environment, eliminating "it works on my machine" problems.
+
+### How to Build and Run the Docker Container:
+
+1.  **Build the image:**
+    ```bash
+    docker build -t fraud-api .
+    ```
+
+2.  **Run the container:**
+    ```bash
+    docker run -p 8000:8000 fraud-api
+    ```
+
