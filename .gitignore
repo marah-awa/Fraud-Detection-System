@@ -1,0 +1,17 @@
+# Python virtual environment
+venv/
+__pycache__/
+
+# Log files and counters
+transactions_queue.log
+retraining_counter.txt
+training_log.txt
+
+# IDE and OS files
+.vscode/
+.idea/
+*.DS_Store
+# Ignore large model files
+*.joblib
+*.pkl
+

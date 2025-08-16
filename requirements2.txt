@@ -1,0 +1,8 @@
+# requirements2.txt
+fastapi
+uvicorn[standard]
+scikit-learn
+pandas
+joblib
+imbalanced-learn
+# We will not include pyodbc here to keep the API container simple
